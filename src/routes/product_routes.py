@@ -133,25 +133,6 @@ def update_stock(id):
     return jsonify({"message": "Stock actualizado", "stock": product.stock}), 200
 
 
-@product_bp.route("/products/by-name/<string:nombre>", methods=["GET"])
-def get_product_by_name(nombre):
-    producto = db_session.query(Product).filter(
-        Product.name.ilike(f"%{nombre}%")
-    ).first()
-
-    if not producto:
-        return jsonify({"error": "Producto no encontrado"}), 404
-
-    return jsonify({
-        "product": {
-            "id": producto.id,
-            "name": producto.name,
-            "description": producto.description,
-            "price": producto.price,
-            "stock": producto.stock,
-            "imagen": producto.imagen
-        }
-    })
     # 🔍 Buscar varios productos por nombre (para recomendaciones IA)
 @product_bp.route("/products/by-name/<string:nombre>", methods=["GET"])
 def get_products_by_name(nombre):
@@ -173,3 +154,20 @@ def get_products_by_name(nombre):
         }
         for p in productos
     ])
+
+#  Nuevo endpoint para lista simple de productos
+@product_bp.route("/products/list", methods=["GET"])
+def get_products_list():
+    productos = db_session.query(Product).all()
+
+    lista_productos = [
+        {
+            "id": p.id,
+            "name": p.name,
+            "price": p.price,
+            "stock": p.stock
+        }
+        for p in productos
+    ]
+
+    return jsonify(lista_productos), 200
