@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
 from datetime import datetime
 from src.database.db import db_session
-from src.models.Models import SalesOrder, User, PaymentPay, Product  # Asegúrate de importar Product
+from src.models.Models import SalesOrder, User, PaymentPay, Product, Order, OrderDetail
 
 sales_order_bp = Blueprint("sales_order_bp", __name__)
 
