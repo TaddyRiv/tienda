@@ -22,12 +22,12 @@ if not stripe_key:
     raise ValueError("🚨 No se encontró STRIPE_SECRET_KEY en el entorno")
 stripe.api_key = stripe_key
 
+
 # === Crear app Flask ===
 app = Flask(__name__)
-CORS(app, resources={r"/api/*": {"origins": "*"}})  # ✅ Permitir peticiones desde React
-CORS(auth_bp)
-CORS(user_bp)
+CORS(app, supports_credentials=True, resources={r"/api/*": {"origins": ["http://localhost:5173"]}})
 
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 # === Registro de Blueprints ===
 app.register_blueprint(user_bp, url_prefix="/api")
 app.register_blueprint(auth_bp, url_prefix="/api")
