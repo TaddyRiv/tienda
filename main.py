@@ -25,7 +25,7 @@ stripe.api_key = stripe_key
 
 # === Crear app Flask ===
 app = Flask(__name__)
-CORS(app, supports_credentials=True, resources={r"/api/*": {"origins": ["http://localhost:5173"]}})
+CORS(app, supports_credentials=True, resources={r"/api/*": {"origins": ["http://localhost:5173","http://127.0.0.1:5173"]}})
 
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 # === Registro de Blueprints ===
